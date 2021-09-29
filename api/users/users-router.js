@@ -37,8 +37,9 @@ router.put("/:id", validateUserId, validateUser, (req, res, next) => {
     .catch(next);
 });
 
-router.delete("/:id", validateUserId, (req, res, next) => {
-  // RETURN THE FRESHLY DELETED USER OBJECT
+router.delete("/:id", validateUserId, async (req, res, next) => {
+  const deletedUser = await Users.getById(req.params.id);
+  Users.remove(req.params.id).then(res.status(200).json(deletedUser)).catch(next);
 });
 
 router.get("/:id/posts", validateUserId, (req, res, next) => {
