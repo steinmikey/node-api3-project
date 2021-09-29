@@ -1,7 +1,7 @@
 const User = require("../users/users-model");
 
 function logger(req, res, next) {
-  console.log(`Method:  ${req.method} \nURL:  ${req.originalUrl} \nTime:  ${new Date()}`);
+  console.log(`Method:  ${req.method} \nURL:  ${req.originalUrl} \nTime:  ${new Date()}\n`);
   next();
 }
 
