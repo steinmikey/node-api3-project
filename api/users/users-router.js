@@ -43,12 +43,20 @@ router.delete("/:id", validateUserId, async (req, res, next) => {
 });
 
 router.get("/:id/posts", validateUserId, (req, res, next) => {
-  // RETURN THE ARRAY OF USER POSTS
+  Users.getUserPosts(req.params.id)
+    .then((posts) => {
+      res.status(200).json(posts);
+    })
+    .catch(next);
 });
 
-router.post("/:id/posts", validateUserId, (req, res, next) => {
-  // RETURN THE NEWLY CREATED USER POST
-  // and another middleware to check that the request body is valid
+router.post("/:id/posts", validateUserId, validatePost, (req, res, next) => {
+  const postInfo = { ...req.body, user_id: req.params.id };
+  Posts.insert(postInfo)
+    .then((post) => {
+      res.status(200).json(post);
+    })
+    .catch(next);
 });
 
 module.exports = router;
